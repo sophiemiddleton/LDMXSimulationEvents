@@ -1,14 +1,14 @@
 from lhereader import readLHEF
 from ROOT import TCanvas, TH1F, TH2F
 import math
-data=readLHEF('unweighted_events.lhe')
+data=readLHEF('run02/unweighted_events.lhe')
 electrons=data.getParticlesByIDs([11,-11])
 c=TCanvas()
 c.Divide(2,2)
 hist_e_theta=TH1F("theta_elec", "Outgoing Electron Theta",100,-1,1)
 hist_4in=TH1F("q^{2} in", "Incoming Electron q^{2} ", 100,0,100)
 hist_4out=TH1F("q^{2} out", "Outgoing Electron q^{2} ", 100,0,100)
-hist_4momRatio=TH1F("q^{2} out", "Ratio q^{2} ", 100,0,100)
+
 for e in electrons:
 
     if e.status is -1 :

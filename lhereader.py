@@ -2,7 +2,8 @@ import xml.etree.ElementTree as ET
 from ROOT import TLorentzVector
 
 class Particle:
-    def __init__(self,pdgid,spin,px=0,py=0,pz=0,energy=0,mass=0, status=0):
+    def __init__(self,eventid, pdgid,spin,px=0,py=0,pz=0,energy=0,mass=0, status=0):
+        self.eventid=eventid
         self.pdgid=pdgid
         self.px=px
         self.py=py
@@ -11,6 +12,7 @@ class Particle:
         self.mass=mass
         self.spin=spin
         self.status=status
+
     @property
     def p4(self):
         return TLorentzVector(self.px,self.py,self.pz,self.energy)
@@ -72,7 +74,7 @@ def readLHEF(name):
     tree = ET.parse(name)
     root=tree.getroot()
     lhefdata=LHEFData(float(root.attrib['version']))
-    for child in root:
+    for n, child in enumerate(root):
         if(child.tag=='event'):
             lines=child.text.strip().split('\n')
             event_header=lines[0].strip()
@@ -80,7 +82,7 @@ def readLHEF(name):
             e=Event(num_part)
             for i in range(1,num_part+1):
                 part_data=lines[i].strip().split()
-                p=Particle(int(part_data[0]), float(part_data[12]), float(part_data[6]), float(part_data[7]), float(part_data[8]), float(part_data[9]), float(part_data[10]), int(part_data[1]))
+                p=Particle(int(n),int(part_data[0]), float(part_data[12]), float(part_data[6]), float(part_data[7]), float(part_data[8]), float(part_data[9]), float(part_data[10]), int(part_data[1]))
                 e.__addParticle__(p)
             lhefdata.__addEvent__(e)
 
