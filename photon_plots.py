@@ -1,7 +1,7 @@
 from lhereader import readLHEF
 from ROOT import TCanvas, TH1F, TH2F
 import math
-data=readLHEF('run02/unweighted_events.lhe')
+data=readLHEF('nonMinECut/unweighted_events.lhe')
 photons=data.getParticlesByIDs([22,-22])
 c=TCanvas()
 c.Divide(2,2)
