@@ -8,10 +8,10 @@ electrons02=data02.getParticlesByIDs([11,-11])
 electrons03=data03.getParticlesByIDs([11,-11])
 
 c=TCanvas()
-c.Divide(1,3)
-hist_4mom_diff_opt1=TH1F("#Delta q^{2} in opt1", "Outgoing - Incoming Electron q^{2} opt1", 100,0,100)
-hist_4mom_diff_opt2=TH1F("#Delta q^{2} in opt2", "Outgoing - Incoming Electron q^{2} opt2", 100,0,100)
-hist_4momRatio=TH1F("q^{2} out opt1/opt2", "Ratio q^{2} ", 100,0,100)
+c.Divide(2,2)
+hist_4mom_diff_opt1=TH1F("#Delta q^{2} in opt1", "Outgoing - Incoming Electron q^{2} opt1", 100,0,4.5)
+hist_4mom_diff_opt2=TH1F("#Delta q^{2} in opt2", "Outgoing - Incoming Electron q^{2} opt2", 100,0,4.5)
+hist_4momRatio=TH1F("q^{2} out opt1/opt2", "Ratio q^{2} ", 100,0,4.5)
 
 for e in electrons02:
     squared_4mom_in = 0
