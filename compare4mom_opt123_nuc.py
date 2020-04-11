@@ -11,47 +11,64 @@ electrons03=data03.getParticlesByIDs([9000002,-9000002])
 
 c=TCanvas()
 c.Divide(2,2)
-hist_4mom_diff_opt1=TH1F("#Delta q^{2} in opt1", "Outgoing - Incoming Nucleus q^{2} opt1", 100,30275,30280)
-hist_4mom_diff_opt2=TH1F("#Delta q^{2} in opt2", "Outgoing - Incoming Nucelus q^{2} opt2", 100,30275,30280)
-hist_4mom_diff_opt3=TH1F("#Delta q^{2} in opt2", "Outgoing - Incoming Nucelus q^{2} opt3", 100,0,4.5)
-hist_4momRatio=TH1F("q^{2} out opt1/opt2", "Ratio q^{2} of opt1/opt2 ", 100,30275,30280)
+hist_4mom_diff_opt1=TH1F("#Delta q^{2} in opt1", "Outgoing - Incoming Nucleus q^{2} opt1", 100,-1,0.5)
+hist_4mom_diff_opt2=TH1F("#Delta q^{2} in opt2", "Outgoing - Incoming Nucelus q^{2} opt2", 100,-0.2,0)
+hist_4mom_diff_opt3=TH1F("#Delta q^{2} in opt2", "Outgoing - Incoming Nucelus q^{2} opt3", 100,-1,0.5)
+hist_4momRatio=TH1F("q^{2} out opt1/opt2", "Ratio q^{2} of opt1/opt2 ", 100,-1,0.5)
+incoming_values_p_opt1 = []
+outgoing_values_p_opt1 = []
+incoming_values_p_opt2 = []
+outgoing_values_p_opt2 = []
+outgoing_values_p_opt3 = []
+incoming_values_p_opt3 = []
 
-for e in electrons01:
+for i, e in enumerate(electrons01):
     incoming = TLorentzVector()
     outgoing = TLorentzVector()
 
     if e.status is -1 :
         incoming.SetPxPyPzE(e.px,e.py,e.pz,e.energy)
-
+        incoming_values_p_opt1.append(incoming)
     if e.status is 1:
         outgoing.SetPxPyPzE(e.px,e.py,e.pz,e.energy)
+        outgoing_values_p_opt1.append(outgoing)
 
-    q2 = (outgoing - incoming).M2()
-    print(q2)
-    hist_4mom_diff_opt1.Fill(q2)
+for j, event in enumerate(incoming_values_p_opt1):
+    qdiff = TLorentzVector()
+    qdiff = outgoing_values_p_opt1[j] - incoming_values_p_opt1[j]
+    hist_4mom_diff_opt1.Fill(qdiff.M2())
 
-for e in electrons02:
+for i, e in enumerate(electrons02):
     incoming = TLorentzVector()
     outgoing = TLorentzVector()
+
     if e.status is -1 :
         incoming.SetPxPyPzE(e.px,e.py,e.pz,e.energy)
-
+        incoming_values_p_opt2.append(incoming)
     if e.status is 1:
         outgoing.SetPxPyPzE(e.px,e.py,e.pz,e.energy)
-    q2 = (outgoing - incoming).M2()
-    hist_4mom_diff_opt2.Fill(q2)
+        outgoing_values_p_opt2.append(outgoing)
 
-for e in electrons03:
+for j, event in enumerate(incoming_values_p_opt2):
+    qdiff = TLorentzVector()
+    qdiff = outgoing_values_p_opt2[j] - incoming_values_p_opt2[j]
+    hist_4mom_diff_opt2.Fill(qdiff.M2())
+
+for i, e in enumerate(electrons03):
     incoming = TLorentzVector()
     outgoing = TLorentzVector()
+
     if e.status is -1 :
         incoming.SetPxPyPzE(e.px,e.py,e.pz,e.energy)
+        incoming_values_p_opt3.append(incoming)
     if e.status is 1:
         outgoing.SetPxPyPzE(e.px,e.py,e.pz,e.energy)
-    q2 = (outgoing - incoming).M2()
-    sigma = 6.4e4
-    hist_4mom_diff_opt3.Fill(q2)
+        outgoing_values_p_opt3.append(outgoing)
 
+for j, event in enumerate(incoming_values_p_opt3):
+    qdiff = TLorentzVector()
+    qdiff = outgoing_values_p_opt3[j] - incoming_values_p_opt3[j]
+    hist_4mom_diff_opt3.Fill(qdiff.M2())
 
 c.cd(1)
 hist_4mom_diff_opt1.GetXaxis().SetTitle("#Delta q^{2}")
