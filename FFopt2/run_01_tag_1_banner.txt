@@ -227,7 +227,7 @@ DarkphotonNuc_UFO_3_FFopt2
 #*********************************************************************
   0.0  = ej     ! minimum E for the jets
   0.0  = eb     ! minimum E for the b
-  2.0  = ea     ! minimum E for the photons
+  0.0  = ea     ! minimum E for the photons
   0.0  = el     ! minimum E for the charged leptons
   -1.0   = ejmax ! maximum E for the jets
  -1.0   = ebmax ! maximum E for the b
@@ -414,7 +414,7 @@ Block QNUMBERS 9000009  # ap
 </slha>
 <MGGenerationInfo>
 #  Number of Events        :       10000
-#  Integrated weight (pb)  :       3142000.0
+#  Integrated weight (pb)  :       3142900.0
 </MGGenerationInfo>
 </header>
 </LesHouchesEvents>
