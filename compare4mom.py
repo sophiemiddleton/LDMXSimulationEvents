@@ -1,11 +1,11 @@
 from lhereader import readLHEF
 from ROOT import TCanvas, TH1F, TH2F
 import math
-data02 =readLHEF('FFopt1/unweighted_events.lhe')
+data01 =readLHEF('FFopt1/unweighted_events.lhe')
 data03 =readLHEF('FFopt2/unweighted_events.lhe')
 
-electrons02=data02.getParticlesByIDs([11,-11])
-electrons03=data03.getParticlesByIDs([11,-11])
+electrons01=data01.getParticlesByIDs([11,-11])
+electrons02=data03.getParticlesByIDs([11,-11])
 
 c=TCanvas()
 c.Divide(2,2)
@@ -13,7 +13,7 @@ hist_4mom_diff_opt1=TH1F("#Delta q^{2} in opt1", "Outgoing - Incoming Electron q
 hist_4mom_diff_opt2=TH1F("#Delta q^{2} in opt2", "Outgoing - Incoming Electron q^{2} opt2", 100,0,4.5)
 hist_4momRatio=TH1F("q^{2} out opt1/opt2", "Ratio q^{2} ", 100,0,4.5)
 
-for e in electrons02:
+for e in electrons01:
     squared_4mom_in = 0
     squared_4mom_out = 0
     if e.status is -1 :
@@ -24,7 +24,7 @@ for e in electrons02:
         squared_4mom_out = (e.px*e.px + e.py*e.py+e.pz*e.pz+e.energy*e.energy)
     hist_4mom_diff_opt1.Fill(squared_4mom_out-squared_4mom_in)
 
-for e in electrons03:
+for e in electrons02:
     squared_4mom_in = 0
     squared_4mom_out = 0
     if e.status is -1 :

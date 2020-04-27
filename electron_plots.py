@@ -1,21 +1,21 @@
 from lhereader import readLHEF
 from ROOT import TCanvas, TH1F, TH2F
 import math
-data=readLHEF('nonMinECut/unweighted_events.lhe')
+data=readLHEF('FixedCuts/unweighted_events.lhe')
 electrons=data.getParticlesByIDs([11,-11])
 c=TCanvas()
 c.Divide(2,2)
 c_mom=TCanvas()
 c_mom.Divide(2,2)
 
-hist_e_theta_out=TH1F("theta_elec_out", "Outgoing Electron Theta",100,1,2)
-hist_e_phi_out=TH1F("phi_elec_out", "Outgoing Electron Phi",100,-math.pi/2,math.pi/2)
+hist_e_theta_out=TH1F("theta_elec_out", "Outgoing Electron Theta",100,0, math.pi)
+hist_e_phi_out=TH1F("phi_elec_out", "Outgoing Electron Phi",100,-math.pi,math.pi)
 hist_4in=TH1F("q^{2} in", "Incoming Electron q^{2} ", 100,0,100)
 hist_4out=TH1F("q^{2} out", "Outgoing Electron q^{2} ", 100,0,100)
 
-hist_Pz_out=TH1F("P_{z} out", "Outgoing Electron P_{z} ", 50,0,5)
-hist_Px_out=TH1F("P_{x} out", "Outgoing Electron P_{x} ", 50,-1,1)
-hist_Py_out=TH1F("P_{y} out", "Outgoing Electron P_{y} ", 50,-1,1)
+hist_Pz_out=TH1F("P_{z} out", "Outgoing Electron P_{z} ", 100,0,5)
+hist_Px_out=TH1F("P_{x} out", "Outgoing Electron P_{x} ", 100,-1,1)
+hist_Py_out=TH1F("P_{y} out", "Outgoing Electron P_{y} ", 100,-1,1)
 
 for e in electrons:
 
@@ -25,9 +25,9 @@ for e in electrons:
 
     if e.status is 1:
         r = math.sqrt(e.px*e.px + e.py*e.py+e.pz*e.pz)
-        theta = math.acos(e.py/r)
+        theta = math.acos(e.pz/r)
         hist_e_theta_out.Fill(theta)
-        azim = math.atan(e.pz/e.px)
+        azim = math.atan(e.py/e.px)
         hist_e_phi_out.Fill(azim)
         squared_4mom = (e.px*e.px + e.py*e.py+e.pz*e.pz+e.energy*e.energy)
         hist_4out.Fill(squared_4mom)
