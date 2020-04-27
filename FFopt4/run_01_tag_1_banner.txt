@@ -414,7 +414,7 @@ Block QNUMBERS 9000009  # ap
 </slha>
 <MGGenerationInfo>
 #  Number of Events        :       10000
-#  Integrated weight (pb)  :       235975.0
+#  Integrated weight (pb)  :       38085.3
 </MGGenerationInfo>
 </header>
 </LesHouchesEvents>
