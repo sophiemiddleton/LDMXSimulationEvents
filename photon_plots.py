@@ -1,7 +1,7 @@
 from lhereader import readLHEF
 from ROOT import TCanvas, TH1F, TH2F
 import math
-data=readLHEF('nonMinECut/unweighted_events.lhe')
+data=readLHEF('FixedCuts/unweighted_events.lhe')
 photons=data.getParticlesByIDs([22,-22])
 c=TCanvas()
 c.Divide(2,2)
@@ -9,14 +9,14 @@ c.Divide(2,2)
 c_mom=TCanvas()
 c_mom.Divide(2,2)
 
-hist_photon_theta=TH1F("theta_photon", "Photon Theta",100,0, math.pi/2)
+hist_photon_theta=TH1F("theta_photon", "Photon Theta",1000,0.4, 1)
 hist_photon_pt =TH1F("photon pt", "Photon Pt",100,0.2,0.7)
 hist_EvTheta=TH2F("Photon Energy v Theta", "Photon Energy v Theta",
-                100,0, math.pi/2,100,0,4)
+                100,0,0.2,100,2.5,4)
 hist_phi=TH1F("phi_photon", "Photon Phi",100,-math.pi, math.pi)
-hist_Pz_out=TH1F("P_{z} ", "Photon P_{z} ", 500,0,5)
-hist_Px_out=TH1F("P_{x}", "Photon P_{x} ", 500,-1,1)
-hist_Py_out=TH1F("P_{y}", "Photon P_{y} ", 500,-1,1)
+hist_Pz_out=TH1F("P_{z} ", "Photon P_{z} ", 100,-1,5)
+hist_Px_out=TH1F("P_{x}", "Photon P_{x} ", 100,-1,1)
+hist_Py_out=TH1F("P_{y}", "Photon P_{y} ", 100,-1,1)
 
 for g in photons:
     #theta = math.atan(g.py/g.pz)
@@ -52,6 +52,6 @@ c_mom.cd(2)
 hist_Py_out.Draw()
 hist_Py_out.GetXaxis().SetTitle("p_{y}")
 c_mom.cd(3)
-hist_Px_out.Draw()
-hist_Px_out.GetXaxis().SetTitle("p_{x}")
+hist_Pz_out.Draw()
+hist_Pz_out.GetXaxis().SetTitle("p_{z}")
 c_mom.SaveAs("photon_mom_plots.png")
