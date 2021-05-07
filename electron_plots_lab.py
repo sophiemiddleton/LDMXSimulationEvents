@@ -7,7 +7,7 @@ EventWeight =0.001583
 Lumi = 0.22
 ProtonsPerN = 74
 Factor = EventWeight*Lumi*ProtonsPerN
-FF=4
+FF=3
 if FF==1:
     Eventweight =281.1
     data=readLHEF('FFop1_cuts/30deg_1.lhe')
@@ -30,7 +30,7 @@ c_mom.Divide(2,2)
 clab=TCanvas()
 clab.Divide(2,2)
 
-hist_e_theta_out=TH1F("theta_elec_out", "Outgoing Electron Theta",100,-math.pi, math.pi)
+hist_e_theta_out=TH1F("theta_elec_out", "Outgoing Electron Theta",100,0, math.pi)
 hist_e_phi_out=TH1F("phi_elec_out", "Outgoing Electron Phi",100,-math.pi,math.pi)
 hist_4in=TH1F("q^{2} in", "Incoming Electron q^{2} ", 100,0,0.00001)
 hist_4out=TH1F("q^{2} out", "Outgoing Electron q^{2} ", 100,0,0.00001)

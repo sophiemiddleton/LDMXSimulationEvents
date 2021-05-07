@@ -7,7 +7,7 @@ Lumi = 0.22
 ProtonsPerN = 74
 Factor = EventWeight*Lumi*ProtonsPerN
 
-data=readLHEF('FFop4_cuts/30deg_1.lhe')
+data=readLHEF('Data/WASB_FF3.lhe')#'FFop3_cuts/30deg_1.lhe')
 photons=data.getParticlesByIDs([22,-22])
 c=TCanvas()
 c.Divide(2,2)
@@ -30,7 +30,7 @@ for g in photons:
     theta = math.acos(g.pz/r)
     azim = math.atan(g.py/g.px)
     hist_phi.Fill(azim)
-    hist_photon_theta.Fill(theta, Factor)
+    hist_photon_theta.Fill(theta)
     hist_photon_pt.Fill(g.pt, Factor)
     hist_EvTheta.Fill(theta,g.energy, Factor)
     hist_Pz_out.Fill(g.pz,Factor)

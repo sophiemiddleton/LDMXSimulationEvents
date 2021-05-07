@@ -37,6 +37,10 @@ photons0=data2.getParticlesByIDs([22,-22])
 photons1=data1.getParticlesByIDs([22,-22])
 photons2=data0.getParticlesByIDs([22,-22])
 
+proton0=data0.getParticlesByIDs([9000002,-9000002])
+proton1=data1.getParticlesByIDs([9000002,-9000002])
+proton2=data2.getParticlesByIDs([9000002,-9000002])
+
 c_mom=TCanvas()
 c_mom.Divide(2,2)
 
@@ -51,6 +55,10 @@ hist_dr_001=TH1F("Opening Angle", "Opening Angle P_{#gamma}^{min} > 0.01 GeV", 1
 hist_pt_1_elec=TH1F("pt ", "pt P_{#gamma}^{min} > 1 GeV", 100,0,1.5)
 hist_pt_01_elec=TH1F("pt ", "pt P_{#gamma}^{min} > 0.1 GeV", 100,0,1.5)
 hist_pt_001_elec=TH1F("pt ", "pt P_{#gamma}^{min} > 0.01 GeV", 100,0,1.5)
+
+hist_pt_1_pro=TH1F("pt ", "pt P_{#gamma}^{min} > 1 GeV", 100,0,1.5)
+hist_pt_01_pro=TH1F("pt ", "pt P_{#gamma}^{min} > 0.1 GeV", 100,0,1.5)
+hist_pt_001_pro=TH1F("pt ", "pt P_{#gamma}^{min} > 0.01 GeV", 100,0,1.5)
 
 hist_pt_1_phot=TH1F("pt ", "pt P_{#gamma}^{min} > 1 GeV", 100,0,1.5)
 hist_pt_01_phot=TH1F("pt ", "pt P_{#gamma}^{min} > 0.1 GeV", 100,0,1.5)
@@ -75,9 +83,12 @@ for g in photons0:
     g_out = TVector3()
     r = math.sqrt(g.px*g.px + g.py*g.py+g.pz*g.pz)
     g_out.SetXYZ(g.px,g.py,g.pz)
-    phot_mom_vect10.append(e_out)
+    phot_mom_vect10.append(g_out)
     phot_r_vect10.append(r*math.cos(g.pz/r))
     hist_pt_1_phot.Fill(g.pt, Factor1)
+for p in proton0:
+    if p.status is 1:
+        hist_pt_1_pro.Fill(p.pt, Factor1)
 for i,pe in enumerate(elec_mom_vect10):
     proj = TVector3()
     mag = math.sqrt(elec_mom_vect10[i].Mag2())
@@ -111,9 +122,12 @@ for g in photons1:
     g_out = TVector3()
     r = math.sqrt(g.px*g.px + g.py*g.py+g.pz*g.pz)
     g_out.SetXYZ(g.px,g.py,g.pz)
-    phot_mom_vect20.append(e_out)
+    phot_mom_vect20.append(g_out)
     phot_r_vect20.append(r*math.cos(g.pz/r))
     hist_pt_01_phot.Fill(g.pt,Factor01)
+for p in proton1:
+    if p.status is 1:
+        hist_pt_01_pro.Fill(p.pt, Factor01)
 for i,pe in enumerate(elec_mom_vect20):
     proj = TVector3()
     mag = math.sqrt(elec_mom_vect20[i].Mag2())
@@ -147,9 +161,12 @@ for g in photons2:
     g_out = TVector3()
     r = math.sqrt(g.px*g.px + g.py*g.py+g.pz*g.pz)
     g_out.SetXYZ(g.px,g.py,g.pz)
-    phot_mom_vect30.append(e_out)
+    phot_mom_vect30.append(g_out)
     phot_r_vect30.append(r*math.cos(g.pz/r))
     hist_pt_001_phot.Fill(g.pt,Factor001)
+for p in proton2:
+    if p.status is 1:
+        hist_pt_001_pro.Fill(p.pt, Factor001)
 for i,pe in enumerate(elec_mom_vect30):
     proj = TVector3()
     mag = math.sqrt(elec_mom_vect30[i].Mag2())
@@ -173,25 +190,34 @@ hist_dr_01.Draw("HISTSAME")
 hist_dr_1.SetLineColor(2)
 hist_dr_1.GetXaxis().SetTitle("Opening Angle [rad]")
 hist_dr_1.Draw("HISTSAME")
+c_mom.cd(2)
+hist_pt_001_pro.GetXaxis().SetTitle("outgoing proton p_{t} [ GeV/c]")
+hist_pt_001_pro.Draw("HIST")
+hist_pt_1_pro.GetXaxis().SetTitle("outgoing proton p_{t} [ GeV/c]")
+hist_pt_1_pro.SetLineColor(2)
+hist_pt_1_pro.Draw("HISTSAME")
+hist_pt_01_pro.GetXaxis().SetTitle("outgoing proton p_{t} [ GeV/c]")
+hist_pt_01_pro.SetLineColor(3)
+hist_pt_01_pro.Draw("HISTSAME")
 
 c_mom.cd(3)
-hist_pt_001_phot.GetXaxis().SetTitle("photon p_{t} [ MeV/c]")
+hist_pt_001_phot.GetXaxis().SetTitle("photon p_{t} [ GeV/c]")
 hist_pt_001_phot.Draw("HIST")
-hist_pt_1_phot.GetXaxis().SetTitle("photon p_{t} [ MeV/c]")
+hist_pt_1_phot.GetXaxis().SetTitle("photon p_{t} [ GeV/c]")
 hist_pt_1_phot.SetLineColor(2)
 hist_pt_1_phot.Draw("HISTSAME")
-hist_pt_01_phot.GetXaxis().SetTitle("photon p_{t} [ MeV/c]")
+hist_pt_01_phot.GetXaxis().SetTitle("photon p_{t} [ GeV/c]")
 hist_pt_01_phot.SetLineColor(3)
 hist_pt_01_phot.Draw("HISTSAME")
 
 
 c_mom.cd(4)
-hist_pt_001_elec.GetXaxis().SetTitle("electron p_{t} [ MeV/c]")
+hist_pt_001_elec.GetXaxis().SetTitle("outgoing electron p_{t} [ MeV/c]")
 hist_pt_001_elec.Draw("HIST")
-hist_pt_1_elec.GetXaxis().SetTitle("electron p_{t} [ MeV/c]")
+hist_pt_1_elec.GetXaxis().SetTitle("outgoing electron p_{t} [ MeV/c]")
 hist_pt_1_elec.SetLineColor(2)
 hist_pt_1_elec.Draw("HISTSAME")
-hist_pt_01_elec.GetXaxis().SetTitle("electron p_{t} [ MeV/c]")
+hist_pt_01_elec.GetXaxis().SetTitle("outgoing electron p_{t} [ MeV/c]")
 hist_pt_01_elec.SetLineColor(3)
 hist_pt_01_elec.Draw("HISTSAME")
 
